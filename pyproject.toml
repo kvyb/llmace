@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llmace"
+version = "0.1.0"
+description = "ACE (Agentic Context Engineering) - A framework for evolving contexts in LLM workflows"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "ACE Contributors"}
+]
+keywords = ["llm", "ai", "agents", "context", "prompt-engineering", "machine-learning"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "openai>=1.0.0",
+    "pydantic>=2.0.0",
+    "numpy>=1.20.0",
+]
+
+[project.optional-dependencies]
+embeddings = [
+    "sentence-transformers>=2.0.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/llmace"
+Documentation = "https://github.com/yourusername/llmace#readme"
+Repository = "https://github.com/yourusername/llmace"
+Issues = "https://github.com/yourusername/llmace/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["llmace"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39']
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
