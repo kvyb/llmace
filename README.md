@@ -182,9 +182,17 @@ llmace = LLMACE(
 llmace.reflect(
     query="Calculate tax for $1000 purchase",
     response="Tax is $80",
-    success=True,
-    feedback="Correct calculation",
+    success=True,  # Just indicate if it worked
     auto_update=True  # Automatically extract and add insights
+)
+
+# Optional: provide feedback for additional context
+llmace.reflect(
+    query="Complex calculation failed",
+    response="Error: division by zero",
+    success=False,
+    feedback="Input validation was missing",  # Extra context for LLM
+    auto_update=True
 )
 ```
 
@@ -323,8 +331,8 @@ If you use LLMACE in your research, please cite:
 ## 🔗 Links
 
 - **PyPI**: https://pypi.org/project/llmace/
-- **GitHub**: https://github.com/yourusername/llmace
-- **Issues**: https://github.com/yourusername/llmace/issues
+- **GitHub**: https://github.com/kvyb/llmace
+- **Issues**: https://github.com/kvyb/llmace/issues
 - **Paper**: https://www.arxiv.org/abs/2510.04618
 
 ---
