@@ -1,12 +1,12 @@
 """
 OpenRouter integration example.
 
-This example shows how to use ACE with OpenRouter to access various LLM providers.
+This example shows how to use LLMACE with OpenRouter to access various LLM providers.
 """
 
 import os
 from openai import OpenAI
-from llmace import ACE
+from llmace import LLMACE
 
 
 def main():
@@ -25,15 +25,10 @@ def main():
     )
     
     # Set default model (you can change this to any OpenRouter model)
-    # Popular options:
-    # - "anthropic/claude-3.5-sonnet"
-    # - "openai/gpt-4-turbo"
-    # - "meta-llama/llama-3.1-70b-instruct"
-    # - "google/gemini-pro-1.5"
     llm_client.default_model = "anthropic/claude-3.5-sonnet"
     
     print("=" * 60)
-    print("ACE with OpenRouter Example")
+    print("LLMACE with OpenRouter Example")
     print(f"Using LLM model: {llm_client.default_model}")
     print("=" * 60)
     print()
@@ -52,8 +47,8 @@ def main():
     
     print()
     
-    # Initialize ACE with separate clients
-    ace = ACE(
+    # Initialize LLMACE with separate clients
+    llmace = LLMACE(
         llm_client=llm_client,
         embedding_client=embedding_client,  # Separate OpenAI client for embeddings
         enable_logging=True
@@ -80,7 +75,7 @@ def main():
     
     # Reflect on the execution
     print("Reflecting on execution...")
-    result = ace.reflect(
+    result = llmace.reflect(
         query=query,
         response=answer,
         success=True,
@@ -97,12 +92,12 @@ def main():
     print("=" * 60)
     print("Evolved Playbook:")
     print("=" * 60)
-    playbook = ace.get_playbook()
+    playbook = llmace.get_playbook()
     print(playbook if playbook else "[Empty playbook]")
     
     # Save context
     filepath = "openrouter_context.json"
-    ace.save(filepath)
+    llmace.save(filepath)
     print(f"\nContext saved to {filepath}")
     
     # Demonstrate loading and reusing context
@@ -110,13 +105,13 @@ def main():
     print("Loading context for reuse...")
     print("=" * 60)
     
-    ace_loaded = ACE.load(
+    llmace_loaded = LLMACE.load(
         filepath,
         llm_client=llm_client,
         embedding_client=embedding_client
     )
-    print(f"Loaded context: {ace_loaded}")
-    print(f"Total bullets: {len(ace_loaded.context)}")
+    print(f"Loaded context: {llmace_loaded}")
+    print(f"Total bullets: {len(llmace_loaded.context)}")
 
 
 if __name__ == "__main__":

@@ -1,12 +1,12 @@
 """
 Auto-reflection example using OpenAI.
 
-This example shows how to use ACE with automatic LLM-driven reflection and curation.
+This example shows how to use LLMACE with automatic LLM-driven reflection and curation.
 """
 
 import os
 from openai import OpenAI
-from llmace import ACE
+from llmace import LLMACE
 from llmace.integrations import inject_playbook_into_messages
 
 
@@ -21,16 +21,16 @@ def main():
     # Initialize OpenAI client for both LLM and embeddings
     client = OpenAI(api_key=api_key)
     
-    # Initialize ACE with LLM client and embedding client for automatic reflection
+    # Initialize LLMACE with LLM client and embedding client for automatic reflection
     # When using OpenAI, you can use the same client for both
-    ace = ACE(
+    llmace = LLMACE(
         llm_client=client,
         embedding_client=client,  # Same client for embeddings
         enable_logging=True
     )
     
     print("=" * 60)
-    print("ACE Auto-Reflection Example")
+    print("LLMACE Auto-Reflection Example")
     print("=" * 60)
     print()
     
@@ -59,7 +59,7 @@ def main():
         print(f"Query: {query}")
         
         # Get current playbook
-        playbook = ace.get_playbook()
+        playbook = llmace.get_playbook()
         
         # Create messages with playbook injected
         messages = [
@@ -70,13 +70,13 @@ def main():
         if playbook:
             messages = inject_playbook_into_messages(
                 messages=messages,
-                context=ace.context,
+                context=llmace.context,
                 position="system"
             )
         
         # Generate response
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="google/gemini-2.5-flash",
             messages=messages,
             temperature=0
         )
@@ -92,7 +92,7 @@ def main():
         
         # Reflect on execution (automatic mode - LLM will be called)
         print("\nReflecting on execution...")
-        result = ace.reflect(
+        result = llmace.reflect(
             query=query,
             response=answer,
             success=success,
@@ -110,12 +110,12 @@ def main():
     print(f"\n{'=' * 60}")
     print("Final Evolved Playbook:")
     print(f"{'=' * 60}")
-    playbook = ace.get_playbook(include_metadata=True)
+    playbook = llmace.get_playbook(include_metadata=True)
     print(playbook)
     
     # Save final context
     filepath = "auto_reflection_context.json"
-    ace.save(filepath)
+    llmace.save(filepath)
     print(f"\nContext saved to {filepath}")
 
 

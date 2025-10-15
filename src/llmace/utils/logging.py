@@ -1,4 +1,4 @@
-"""Logging setup for ACE."""
+"""Logging setup for LLMACE."""
 
 import logging
 from typing import Optional
@@ -10,7 +10,7 @@ def setup_logger(
     format_string: Optional[str] = None
 ) -> logging.Logger:
     """
-    Setup a logger for ACE.
+    Setup a logger for LLMACE.
     
     Args:
         name: Logger name

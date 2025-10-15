@@ -30,8 +30,8 @@ def create_embedding_function(
         client = OpenAI(api_key="sk-...")
         embedding_fn = create_embedding_function(client)
         
-        # Use with ACE
-        ace = ACE(embedding_fn=embedding_fn)
+        # Use with LLMACE
+        llmace = LLMACE(embedding_fn=embedding_fn)
         ```
     """
     def embed(text: str) -> List[float]:

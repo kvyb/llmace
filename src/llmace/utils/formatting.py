@@ -7,7 +7,7 @@ from llmace.core.schemas import Bullet
 
 class PlaybookFormatter:
     """
-    Formats ACE context into structured playbook strings for prompt injection.
+    Formats LLMACE context into structured playbook strings for prompt injection.
     """
     
     def __init__(

@@ -1,4 +1,4 @@
-"""OpenAI integration utilities for ACE."""
+"""OpenAI integration utilities for LLMACE."""
 
 from typing import List, Dict, Optional
 
@@ -21,7 +21,7 @@ def inject_playbook_into_messages(
     instruction_template: Optional[str] = None
 ) -> List[Dict[str, str]]:
     """
-    Inject ACE playbook into OpenAI messages array.
+    Inject LLMACE playbook into OpenAI messages array.
     
     Args:
         messages: List of message dicts (OpenAI format)
@@ -95,9 +95,9 @@ def inject_playbook_into_messages(
 
 class ACEOpenAIWrapper:
     """
-    Wrapper around OpenAI client that automatically injects ACE playbook.
+    Wrapper around OpenAI client that automatically injects LLMACE playbook.
     
-    This provides a convenient way to use ACE with OpenAI-style APIs.
+    This provides a convenient way to use LLMACE with OpenAI-style APIs.
     """
     
     def __init__(
@@ -110,7 +110,7 @@ class ACEOpenAIWrapper:
         min_score: int = 0
     ):
         """
-        Initialize ACE OpenAI wrapper.
+        Initialize LLMACE OpenAI wrapper.
         
         Args:
             client: OpenAI client (or compatible)

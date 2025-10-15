@@ -1,18 +1,18 @@
 """
-Basic ACE usage example - Manual reflection mode.
+Basic LLMACE usage example - Manual reflection mode.
 
-This example shows how to use ACE without automatic LLM calls,
+This example shows how to use LLMACE without automatic LLM calls,
 by manually providing reflection and curation results.
 """
 
-from llmace import ACE
+from llmace import LLMACE
 
 def main():
-    # Initialize ACE without LLM client (manual mode)
-    ace = ACE(enable_logging=True)
+    # Initialize LLMACE without LLM client (manual mode)
+    llmace = LLMACE(enable_logging=True)
     
     print("=" * 60)
-    print("ACE Basic Usage Example - Manual Mode")
+    print("LLMACE Basic Usage Example - Manual Mode")
     print("=" * 60)
     print()
     
@@ -59,7 +59,7 @@ def main():
     
     # Reflect and update context
     print("Running reflection and curation...")
-    result = ace.reflect(
+    result = llmace.reflect(
         query=query,
         response=response,
         success=success,
@@ -75,28 +75,28 @@ def main():
     print("=" * 60)
     print("Current Playbook:")
     print("=" * 60)
-    playbook = ace.get_playbook(include_metadata=True)
+    playbook = llmace.get_playbook(include_metadata=True)
     print(playbook)
     print()
     
     # Save context
     filepath = "basic_context.json"
-    ace.save(filepath)
+    llmace.save(filepath)
     print(f"Context saved to {filepath}")
     print()
     
     # Load context
-    ace_loaded = ACE.load(filepath)
-    print(f"Context loaded: {ace_loaded}")
+    llmace_loaded = LLMACE.load(filepath)
+    print(f"Context loaded: {llmace_loaded}")
     print()
     
     # Show statistics
     print("=" * 60)
     print("Context Statistics:")
     print("=" * 60)
-    print(f"Total bullets: {len(ace.context)}")
-    for section in ace.context.config.sections:
-        bullets = ace.context.get_bullets_by_section(section)
+    print(f"Total bullets: {len(llmace.context)}")
+    for section in llmace.context.config.sections:
+        bullets = llmace.context.get_bullets_by_section(section)
         print(f"  {section}: {len(bullets)} bullets")
 
 if __name__ == "__main__":

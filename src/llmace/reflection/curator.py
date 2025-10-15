@@ -2,6 +2,7 @@
 
 import json
 from typing import Optional, List
+import backoff
 
 try:
     from openai import OpenAI
@@ -92,20 +93,64 @@ class Curator:
         # Build the prompt
         prompt = self._build_curation_prompt(reflection, context, task_context)
         
-        # Call LLM
-        response = self.llm_client.chat.completions.create(
-            model=getattr(self.llm_client, 'default_model', 'gpt-4'),
-            messages=[
-                {"role": "system", "content": "You are a knowledge curator. Respond with valid JSON only."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            response_format={"type": "json_object"} if hasattr(self.llm_client, 'default_model') else None
-        )
+        # Define JSON schema for structured output
+        json_schema = {
+            "name": "curation_output",
+            "strict": True,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "reasoning": {"type": "string"},
+                    "deltas": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "operation": {
+                                    "type": "string",
+                                    "enum": ["add", "update"]
+                                },
+                                "bullet_id": {
+                                    "type": ["string", "null"]
+                                },
+                                "section": {"type": "string"},
+                                "content": {"type": "string"},
+                                "metadata": {"type": "object", "additionalProperties": True}
+                            },
+                            "required": ["operation", "section", "content"],
+                            "additionalProperties": False
+                        }
+                    }
+                },
+                "required": ["reasoning", "deltas"],
+                "additionalProperties": False
+            }
+        }
         
-        # Parse response
-        content = response.choices[0].message.content
-        result = json.loads(content)
+        # Call LLM with structured output and retry on failures
+        @backoff.on_exception(
+            backoff.expo,
+            (json.JSONDecodeError, Exception),
+            max_tries=3,
+            max_time=30
+        )
+        def call_llm_with_retry():
+            response = self.llm_client.chat.completions.create(
+                model=getattr(self.llm_client, 'default_model', 'google/gemini-2.5-flash'),
+                messages=[
+                    {"role": "system", "content": "You are a knowledge curator. Respond with valid JSON only."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                response_format={
+                    "type": "json_schema",
+                    "json_schema": json_schema
+                }
+            )
+            content = response.choices[0].message.content
+            return json.loads(content)
+        
+        result = call_llm_with_retry()
         
         return self._parse_curation_result(result)
     

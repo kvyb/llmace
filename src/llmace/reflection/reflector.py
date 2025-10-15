@@ -2,6 +2,7 @@
 
 import json
 from typing import Optional
+import backoff
 
 try:
     from openai import OpenAI
@@ -79,20 +80,60 @@ class Reflector:
         # Build the prompt
         prompt = self._build_reflection_prompt(reflection_input)
         
-        # Call LLM
-        response = self.llm_client.chat.completions.create(
-            model=getattr(self.llm_client, 'default_model', 'gpt-4'),
-            messages=[
-                {"role": "system", "content": "You are an expert analyst. Respond with valid JSON only."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            response_format={"type": "json_object"} if hasattr(self.llm_client, 'default_model') else None
-        )
+        # Define JSON schema matching ReflectionOutput model
+        json_schema = {
+            "name": "reflection_output",
+            "strict": True,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "reasoning": {"type": "string"},
+                    "error_identification": {"type": ["string", "null"]},
+                    "root_cause_analysis": {"type": ["string", "null"]},
+                    "correct_approach": {"type": ["string", "null"]},
+                    "key_insight": {"type": "string"},
+                    "bullet_tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {"type": "string"},
+                                "tag": {"type": "string"}
+                            },
+                            "required": ["id", "tag"],
+                            "additionalProperties": False
+                        }
+                    }
+                },
+                "required": ["reasoning", "key_insight"],
+                "additionalProperties": False
+            }
+        }
         
-        # Parse response
-        content = response.choices[0].message.content
-        result = json.loads(content)
+        # Call LLM with structured output and retry on failures
+        @backoff.on_exception(
+            backoff.expo,
+            (json.JSONDecodeError, Exception),
+            max_tries=3,
+            max_time=30
+        )
+        def call_llm_with_retry():
+            response = self.llm_client.chat.completions.create(
+                model=getattr(self.llm_client, 'default_model', 'google/gemini-2.5-flash'),
+                messages=[
+                    {"role": "system", "content": "You are an expert analyst. Respond with valid JSON only."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                response_format={
+                    "type": "json_schema",
+                    "json_schema": json_schema
+                }
+            )
+            content = response.choices[0].message.content
+            return json.loads(content)
+        
+        result = call_llm_with_retry()
         
         # Apply bullet tags if provided in input
         if reflection_input.used_bullet_ids:

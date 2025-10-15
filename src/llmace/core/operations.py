@@ -8,7 +8,7 @@ from llmace.core.schemas import Bullet
 
 class ContextOperations:
     """
-    Handles advanced operations on ACE contexts like deduplication and refinement.
+    Handles advanced operations on LLMACE contexts like deduplication and refinement.
     """
     
     def __init__(

@@ -1,4 +1,4 @@
-"""Main ACE class - high-level interface for Agentic Context Engineering."""
+"""Main LLMACE class - high-level interface for Agentic Context Engineering."""
 
 import json
 from typing import Any, Callable, Dict, List, Optional
@@ -23,35 +23,35 @@ from llmace.utils.formatting import format_playbook_for_prompt
 from llmace.utils.logging import setup_logger
 
 
-class ACE:
+class LLMACE:
     """
-    Main ACE (Agentic Context Engineering) class.
+    Main LLMACE (Agentic Context Engineering) class.
     
     This provides a high-level interface for building and evolving contexts
     through reflection and curation.
     
     Example:
         ```python
-        from llmace import ACE
+        from llmace import LLMACE
         from openai import OpenAI
         
         # Initialize with OpenAI client
         client = OpenAI(api_key="...")
-        ace = ACE(llm_client=client)
+        llmace = LLMACE(llm_client=client)
         
         # Get playbook for prompt injection
-        playbook = ace.get_playbook()
+        playbook = llmace.get_playbook()
         
         # Reflect on an execution
-        ace.reflect(
+        llmace.reflect(
             query="Solve this problem...",
             response="Here's my solution...",
             success=True
         )
         
         # Save/load context
-        ace.save("my_context.json")
-        ace = ACE.load("my_context.json", llm_client=client)
+        llmace.save("my_context.json")
+        llmace = LLMACE.load("my_context.json", llm_client=client)
         ```
     """
     
@@ -68,7 +68,7 @@ class ACE:
         enable_logging: bool = False
     ):
         """
-        Initialize ACE.
+        Initialize LLMACE.
         
         Args:
             llm_client: OpenAI-compatible client for auto-reflection (optional)
@@ -304,7 +304,7 @@ class ACE:
     
     def to_dict(self) -> Dict:
         """
-        Serialize ACE instance to dictionary.
+        Serialize LLMACE instance to dictionary.
         
         Returns:
             Dictionary representation
@@ -319,19 +319,19 @@ class ACE:
         embedding_fn: Optional[Callable[[str], List[float]]] = None,
         embedding_client: Optional[OpenAI] = None,
         **kwargs
-    ) -> "ACE":
+    ) -> "LLMACE":
         """
-        Deserialize ACE instance from dictionary.
+        Deserialize LLMACE instance from dictionary.
         
         Args:
             data: Dictionary with context data
             llm_client: LLM client for reflection
             embedding_fn: Embedding function
             embedding_client: OpenAI client for embeddings
-            **kwargs: Additional arguments for ACE constructor
+            **kwargs: Additional arguments for LLMACE constructor
         
         Returns:
-            Reconstructed ACE instance
+            Reconstructed LLMACE instance
         """
         context = ACEContext.from_dict(data)
         return cls(
@@ -364,7 +364,7 @@ class ACE:
         embedding_fn: Optional[Callable[[str], List[float]]] = None,
         embedding_client: Optional[OpenAI] = None,
         **kwargs
-    ) -> "ACE":
+    ) -> "LLMACE":
         """
         Load context from JSON file.
         
@@ -373,10 +373,10 @@ class ACE:
             llm_client: LLM client for reflection
             embedding_fn: Embedding function
             embedding_client: OpenAI client for embeddings
-            **kwargs: Additional arguments for ACE constructor
+            **kwargs: Additional arguments for LLMACE constructor
         
         Returns:
-            Loaded ACE instance
+            Loaded LLMACE instance
         """
         with open(filepath, 'r') as f:
             data = json.load(f)
@@ -391,5 +391,5 @@ class ACE:
     
     def __repr__(self) -> str:
         """String representation."""
-        return f"ACE(bullets={len(self.context)}, sections={len(self.context.config.sections)})"
+        return f"LLMACE(bullets={len(self.context)}, sections={len(self.context.config.sections)})"
 

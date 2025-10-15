@@ -1,4 +1,4 @@
-"""Core context management for ACE."""
+"""Core context management for LLMACE."""
 
 import uuid
 from typing import Dict, List, Optional
@@ -10,12 +10,12 @@ class ACEContext:
     Manages collections of bullets organized by sections.
     
     This is the core data structure that stores and retrieves knowledge
-    accumulated through the ACE framework.
+    accumulated through the LLMACE framework.
     """
     
     def __init__(self, config: Optional[ContextConfig] = None):
         """
-        Initialize ACE context.
+        Initialize LLMACE context.
         
         Args:
             config: Configuration for context behavior. Uses defaults if None.

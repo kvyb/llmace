@@ -1,4 +1,4 @@
-"""Utility functions for ACE."""
+"""Utility functions for LLMACE."""
 
 from llmace.utils.formatting import PlaybookFormatter
 from llmace.utils.logging import setup_logger

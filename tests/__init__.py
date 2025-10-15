@@ -1,2 +1,5 @@
-"""Tests for llmace package."""
+"""
+LLMACE testing utilities.
+"""
 
+__all__ = []

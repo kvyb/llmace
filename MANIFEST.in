@@ -1,14 +1,21 @@
 include README.md
 include LICENSE
-include QUICKSTART.md
+include CHANGELOG.md
 include CONTRIBUTING.md
 include pyproject.toml
+include env.example
 
-recursive-include llmace *.py
-recursive-include tests *.py
+recursive-include src/llmace *.py
+include src/llmace/py.typed
 recursive-include examples *.py *.md
+recursive-include docs *.md
 
-global-exclude __pycache__
-global-exclude *.py[co]
-global-exclude .DS_Store
-
+exclude *.pyc
+exclude *.pyo
+exclude *~
+exclude .DS_Store
+recursive-exclude tests *
+recursive-exclude __pycache__ *
+recursive-exclude *.egg-info *
+prune .venv
+prune docs/_build

@@ -84,9 +84,9 @@ python openrouter_integration.py
 ### Getting a Playbook for Prompt Injection
 
 ```python
-from llmace import ACE
+from llmace import LLMACE
 
-ace = ACE()
+llmace = LLMACE()
 playbook = ace.get_playbook()
 
 # Use in your prompts
@@ -116,7 +116,7 @@ result = ace.reflect(
 ace.save("my_context.json")
 
 # Load
-ace = ACE.load("my_context.json", llm_client=client)
+llmace = LLMACE.load("my_context.json", llm_client=client)
 ```
 
 ## Tips

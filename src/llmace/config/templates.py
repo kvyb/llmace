@@ -1,4 +1,4 @@
-"""Prompt templates for ACE reflection and curation."""
+"""Prompt templates for LLMACE reflection and curation."""
 
 # Reflection prompt - analyzes what went right/wrong in a task execution
 REFLECTION_PROMPT_TEMPLATE = """You are an expert analyst tasked with reflecting on an AI agent's performance.
@@ -79,7 +79,7 @@ If no new insights are needed, return an empty deltas list.
 """
 
 # Generator instruction template - how to use the playbook
-GENERATOR_INSTRUCTION_TEMPLATE = """**ACE Playbook Available:**
+GENERATOR_INSTRUCTION_TEMPLATE = """**LLMACE Playbook Available:**
 
 You have access to a curated playbook containing strategies, insights, and best practices accumulated from previous executions. Use this playbook to inform your approach.
 

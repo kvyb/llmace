@@ -1,4 +1,4 @@
-"""Core components for ACE context management."""
+"""Core components for LLMLLMACE context management."""
 
 from llmace.core.context import Bullet, ACEContext
 from llmace.core.schemas import BulletDelta, ContextConfig, ReflectionInput, ReflectionOutput

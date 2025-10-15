@@ -146,17 +146,22 @@ cython_debug/
 .DS_Store
 Thumbs.db
 
-# ACE specific
-*.json
-!pyproject.toml
-examples/*.json
+# Project specific
+# Ignore test outputs and temporary results
+benchmark_results_*.json
+benchmark_log_*.md
+faq_benchmark_*.json
+*_output.txt
+debug_output.txt
 
-# Markdown files (except README and CONTRIBUTING)
-*.md
-!README.md
-!CONTRIBUTING.md
+# Keep example outputs
+!examples/**/*.json
+!docs/**/*.md
 
 # Temporary files
 tmp/
 temp/
 *.tmp
+
+# UV lock file
+uv.lock

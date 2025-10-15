@@ -21,25 +21,25 @@ def main():
     # Test 2: Import main classes
     print("\n2. Testing main class imports...")
     try:
-        from llmace import ACE, Bullet, ACEContext, ContextConfig, create_embedding_function
+        from llmace import LLMACE, Bullet, ACEContext, ContextConfig, create_embedding_function
         print("   ✅ Main classes imported successfully")
     except ImportError as e:
         print(f"   ❌ Failed to import classes: {e}")
         return False
     
-    # Test 3: Create ACE instance
-    print("\n3. Testing ACE instantiation...")
+    # Test 3: Create LLMACE instance
+    print("\n3. Testing LLMACE instantiation...")
     try:
-        ace = ACE()
-        print(f"   ✅ ACE instance created: {ace}")
+        llmace = LLMACE()
+        print(f"   ✅ LLMACE instance created: {llmace}")
     except Exception as e:
-        print(f"   ❌ Failed to create ACE instance: {e}")
+        print(f"   ❌ Failed to create LLMACE instance: {e}")
         return False
     
     # Test 4: Add a bullet
     print("\n4. Testing bullet addition...")
     try:
-        bullet_id = ace.add_bullet(
+        bullet_id = llmace.add_bullet(
             section="strategies",
             content="Test bullet for verification"
         )
@@ -51,7 +51,7 @@ def main():
     # Test 5: Get playbook
     print("\n5. Testing playbook generation...")
     try:
-        playbook = ace.get_playbook()
+        playbook = llmace.get_playbook()
         if "Test bullet for verification" in playbook:
             print("   ✅ Playbook generated successfully")
         else:
@@ -63,9 +63,9 @@ def main():
     # Test 6: Serialization
     print("\n6. Testing serialization...")
     try:
-        data = ace.to_dict()
-        ace2 = ACE.from_dict(data)
-        print(f"   ✅ Serialization working: {len(ace2.context)} bullets restored")
+        data = llmace.to_dict()
+        llmace2 = LLMACE.from_dict(data)
+        print(f"   ✅ Serialization working: {len(llmace2.context)} bullets restored")
     except Exception as e:
         print(f"   ❌ Failed serialization: {e}")
         return False

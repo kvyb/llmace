@@ -1,4 +1,4 @@
-"""Pydantic schemas for ACE data structures and validation."""
+"""Pydantic schemas for LLMLLMACE data structures and validation."""
 
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, field_validator
@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, field_validator
 
 class Bullet(BaseModel):
     """
-    A single unit of knowledge in the ACE context.
+    A single unit of knowledge in the LLMACE context.
     
     Bullets are atomic pieces of information like strategies, insights,
     common mistakes, or domain concepts that accumulate over time.
@@ -74,7 +74,7 @@ class BulletDelta(BaseModel):
 
 class ContextConfig(BaseModel):
     """
-    Configuration for ACE context behavior.
+    Configuration for LLMLLMACE context behavior.
     """
     
     sections: List[str] = Field(
