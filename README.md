@@ -6,7 +6,7 @@
 
 **Agentic Context Engineering** - A Python framework for evolving LLM contexts through reflection and curation.
 
-> 📄 Based on research: **Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models**  
+> 📄 Based on research: [Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models](https://arxiv.org/abs/2510.04618)  
 > _Qizheng Zhang, Changran Hu, et al. (Stanford University & SambaNova Systems)_
 
 ## What is LLMACE?
@@ -319,11 +319,11 @@ MIT License - see [LICENSE](LICENSE) file for details.
 If you use LLMACE in your research, please cite the original paper:
 
 ```bibtex
-@article{zhang2025ace,
+@article{zhang2024ace,
   title={Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models},
   author={Zhang, Qizheng and Hu, Changran and Upasani, Shubhangi and Ma, Boyuan and Hong, Fenglu and Kamanuru, Vamsidhar and Rainton, Jay and Wu, Chen and Ji, Mengmeng and Li, Hanchen and Thakker, Urmish and Zou, James and Olukotun, Kunle},
-  institution={Stanford University and SambaNova Systems},
-  year={2025}
+  journal={arXiv preprint arXiv:2510.04618},
+  year={2024}
 }
 ```
 
@@ -339,7 +339,12 @@ If you use LLMACE in your research, please cite the original paper:
 
 ## 🙏 Acknowledgments
 
-Built based on research by Qizheng Zhang, Changran Hu, and colleagues at Stanford University and SambaNova Systems. Special thanks to the open-source community.
+Built based on research by Qizheng Zhang, Changran Hu, and colleagues at Stanford University and SambaNova Systems. 
+
+**Related Projects:**
+- [ACE-open](https://github.com/sci-m-wang/ACE-open) - Alternative research-focused implementation of the ACE paper
+
+Special thanks to the open-source community.
 
 ---
 
